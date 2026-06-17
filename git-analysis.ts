@@ -15,7 +15,14 @@ run();
 
 
 
-async function getDataBase(){
+export async function getDataBase(){
+    // users = id
+    // posts = id, userId
+    // photos = id, albumId
     const user = await fetch("https://jsonplaceholder.typicode.com/users");
     const userData = await user.json();
+    const posts = await fetch("https://jsonplaceholder.typicode.com/posts");
+    const postsData = await posts.json();
+    const photos = await fetch("https://jsonplaceholder.typicode.com/photos")
+    const photosData = await photos.json();
 }
