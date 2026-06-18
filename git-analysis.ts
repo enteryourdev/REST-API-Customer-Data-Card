@@ -46,7 +46,7 @@ export async function getDataBase(){
     // goal is to do a join
     const user: User[] = await (await fetch("https://jsonplaceholder.typicode.com/users")).json();
     const posts: Posts[] = await (await fetch("https://jsonplaceholder.typicode.com/posts")).json();
-    const photos: Photos[] = await (await fetch("https://jsonplaceholder.typicode.com/photos")).json();
+    //const photos: Photos[] = await (await fetch("https://jsonplaceholder.typicode.com/photos")).json();
 
     user.forEach(user => {
         user.posts = posts.filter(posts => posts.userId === user.id);

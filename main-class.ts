@@ -8,3 +8,5 @@ Objective: make a person card for each person in the database.
 
 
 */
+
+import { getDataBase } from "./git-analysis"
