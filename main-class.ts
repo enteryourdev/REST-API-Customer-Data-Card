@@ -24,10 +24,18 @@ function current(){
     return people[pointer];
 }
 function next(){
-
+    pointer++
+    if (pointer >= people.length) {
+        pointer = 0;
+    }
+    return people[pointer]
 }
 function prev(){
-
+    pointer--
+    if (pointer < 0) {
+        pointer = people.length - 1;
+    }
+    return people[pointer]
 }
 
 async function run() {
