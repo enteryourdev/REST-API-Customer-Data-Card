@@ -48,7 +48,13 @@ export async function getDataBase<T>(): Promise<T[] | null>{
     const posts: Posts[] = await (await fetch("https://jsonplaceholder.typicode.com/posts")).json();
     //const photos: Photos[] = await (await fetch("https://jsonplaceholder.typicode.com/photos")).json();
 
-    user.forEach(user => {
+    const trimmedUserData = user.map((data) => ({
+        id: data.id,
+        username: data.username,
+        email: data.email,
+        posts: data.posts
+    }))
+    .forEach(user => {
         user.posts = posts.find(posts => posts.userId === user.id);
     });
 
