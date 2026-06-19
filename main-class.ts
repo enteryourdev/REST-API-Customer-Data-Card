@@ -12,9 +12,13 @@ Objective: make a person card for each person in the database.
 import { getDataBase } from "./git-analysis"
 import { TrimmedUser } from "./git-analysis";
 
-
-const people = await getDataBase<TrimmedUser>();
 let pointer = 0;
+let people: TrimmedUser[] = [];
+
+async function main() {
+    people = await getDataBase<TrimmedUser>();
+}
+
 
 function current(){
     return people[pointer];
@@ -26,7 +30,13 @@ function prev(){
 
 }
 
-current();
+async function run() {
+  await main();              // wait for the fetch, it NEEDS to wait.
+  console.log(current());    
+
+}
+
+run();
 
 /*
 I have a list of people.
