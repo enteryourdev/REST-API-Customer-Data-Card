@@ -52,13 +52,10 @@ export async function getDataBase<T>(): Promise<T[] | null>{
         id: data.id,
         username: data.username,
         email: data.email,
-        posts: data.posts
-    }))
-    .forEach(user => {
-        user.posts = posts.find(posts => posts.userId === user.id);
-    });
+        posts: posts.find(posts => posts.userId === data.id)
+    }));
 
-    console.log(user);
+    console.log(trimmedUserData);
     return [user, posts] as T[];
 }
 
