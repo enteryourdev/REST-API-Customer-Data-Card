@@ -22,7 +22,7 @@ interface User{
         city: string,
         zipcode: number,
     }
-    posts?: Posts[],
+    posts?: Posts,
     photos?: Photos[]
 }
 interface Posts{
@@ -39,7 +39,7 @@ interface Photos{
     thumbnailUrl: string
 }
 
-export async function getDataBase(){
+export async function getDataBase<T>(): Promise<T[] | null>{
     // users = id
     // posts = id, userId
     // photos = id, albumId
@@ -49,10 +49,11 @@ export async function getDataBase(){
     //const photos: Photos[] = await (await fetch("https://jsonplaceholder.typicode.com/photos")).json();
 
     user.forEach(user => {
-        user.posts = posts.filter(posts => posts.userId === user.id);
+        user.posts = posts.find(posts => posts.userId === user.id);
     });
 
     console.log(user);
+    return [user, posts] as T[];
 }
 
 getDataBase();
