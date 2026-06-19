@@ -38,8 +38,17 @@ interface Photos{
     url: string,
     thumbnailUrl: string
 }
+export interface TrimmedUser {
+  id: number,
+  username: string,
+  email: string,
+  posts?: { 
+    title: string, 
+    body: string 
+};
+}
 
-export async function getDataBase<T>(): Promise<T[] | null>{
+export async function getDataBase<T>(): Promise<T[]>{
     // users = id
     // posts = id, userId
     // photos = id, albumId
@@ -48,15 +57,17 @@ export async function getDataBase<T>(): Promise<T[] | null>{
     const posts: Posts[] = await (await fetch("https://jsonplaceholder.typicode.com/posts")).json();
     //const photos: Photos[] = await (await fetch("https://jsonplaceholder.typicode.com/photos")).json();
 
-    const trimmedUserData = user.map((data) => ({
+    const trimmedUserData = user.map((data) => {
+        const post = posts.find(posts => posts.userId === data.id);
+        return {
         id: data.id,
         username: data.username,
         email: data.email,
-        posts: posts.find(posts => posts.userId === data.id)
-    }));
+        posts: post ? { title: post.title, body: post.body } : undefined,
+    };
+});
 
-    console.log(trimmedUserData);
-    return [user, posts] as T[];
+    return trimmedUserData as T[];
 }
 
 getDataBase();
