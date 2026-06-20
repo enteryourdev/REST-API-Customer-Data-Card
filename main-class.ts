@@ -46,6 +46,21 @@ async function run() {
 
 run();
 
+
+class mainClass{
+
+
+
+    constructor(){
+
+    }
+
+    start(){
+        
+    }
+
+}
+
 /*
 I have a list of people.
 you can only see one at a time.
