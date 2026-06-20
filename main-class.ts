@@ -11,6 +11,7 @@ Objective: make a person card for each person in the database.
 
 import { getDataBase } from "./git-analysis"
 import { TrimmedUser } from "./git-analysis";
+import * as readline from "readline";
 
 let pointer = 0;
 let people: TrimmedUser[] = [];
@@ -55,8 +56,12 @@ class mainClass{
 
     }
 
-    start(){
-        
+    async start(){
+        const peopleData = await main();
+
+
+        //key press
+
     }
 
 }
@@ -68,3 +73,7 @@ you can go forward or backwards to see other people.
 you can either fire or hire.
 
 */
+
+//key press
+
+//launch
