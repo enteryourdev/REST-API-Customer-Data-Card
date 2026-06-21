@@ -12,57 +12,69 @@ Objective: make a person card for each person in the database.
 import { getDataBase } from "./git-analysis"
 import { TrimmedUser } from "./git-analysis";
 import * as readline from "readline";
-
-let pointer = 0;
-let people: TrimmedUser[] = [];
-
-async function main() {
-    people = await getDataBase<TrimmedUser>();
-}
-
-
-function current(){
-    return people[pointer];
-}
-function next(){
-    pointer++
-    if (pointer >= people.length) {
-        pointer = 0;
-    }
-    return people[pointer]
-}
-function prev(){
-    pointer--
-    if (pointer < 0) {
-        pointer = people.length - 1;
-    }
-    return people[pointer]
-}
-
-async function run() {
-  await main();              // wait for the fetch, it NEEDS to wait.
-  console.log(current());    
-
-}
-
-run();
+let gameover: boolean = false;
 
 
 class mainClass{
-
+private pointer = 0;
+private people: TrimmedUser[] = [];
 
 
     constructor(){
 
     }
 
-    async start(){
-        const peopleData = await main();
+    async load(){
+        this.people = await getDataBase<TrimmedUser>();
+    }
 
+    async start(){
+
+        const peopleData = await this.load();
+        console.log(this.current()); 
 
         //key press
+        readline.emitKeypressEvents(process.stdin);
+        if (process.stdin.isTTY) process.stdin.setRawMode(true);
+        process.stdin.on("keypress", (str, key) => {
+            if (gameover) return;
+            if (key.ctrl && key.name === 'c') process.exit();
+
+            if (key.name === 'a') {
+                console.log(this.prev());
+            }
+            if (key.name === 'd') {
+                console.log(this.next());
+            }
+            if (key.name === 'enter') {
+                //hire
+            }
+            if (key.name === 'backspace') {
+                //fire
+    }
+});
 
     }
+
+
+    current(){
+        return this.people[this.pointer];
+    }
+
+    next(){
+        this.pointer++
+        if (this.pointer >= this.people.length) this.pointer = 0;
+        return this.current();
+    }
+
+    prev(){
+        this.pointer--
+        if (this.pointer < 0) {
+            this.pointer = this.people.length - 1;
+        }
+        return this.people[this.pointer]
+    }
+
 
 }
 
@@ -77,3 +89,4 @@ you can either fire or hire.
 //key press
 
 //launch
+new mainClass().start();
