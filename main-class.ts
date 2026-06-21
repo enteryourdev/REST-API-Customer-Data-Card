@@ -13,7 +13,8 @@ let gameover: boolean = false;
 class mainClass{
 private pointer = 0;
 private people: TrimmedUser[] = [];
-
+private hired: TrimmedUser[] = [];
+private fired: TrimmedUser[] = [];
 
     constructor(){
 
