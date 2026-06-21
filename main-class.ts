@@ -2,11 +2,6 @@
 Objective: make a person card for each person in the database.
 1. make sure to show the person's ID, Name, Post, and Photo.
 2. You can press A for go back, or D to go forward for next person.
-
-
-
-
-
 */
 
 import { getDataBase } from "./git-analysis"
@@ -51,23 +46,22 @@ private people: TrimmedUser[] = [];
             }
             if (key.name === 'backspace') {
                 //fire
-    }
-});
+        }
+    }); 
+}
 
-    }
 
-
-    current(){
+    private current(){
         return this.people[this.pointer];
     }
 
-    next(){
+    private next(){
         this.pointer++
         if (this.pointer >= this.people.length) this.pointer = 0;
         return this.current();
     }
 
-    prev(){
+    private prev(){
         this.pointer--
         if (this.pointer < 0) {
             this.pointer = this.people.length - 1;
