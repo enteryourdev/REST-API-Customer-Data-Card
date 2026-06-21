@@ -42,15 +42,19 @@ private fired: TrimmedUser[] = [];
             if (key.name === 'd') {
                 console.log(this.next());
             }
-            if (key.name === 'enter') {
+            if (key.name === 'return') {
                 //hire
+                //splice the current and push to hired.
+                this.hired.push(this.current());
+                this.people.splice(this.pointer, 1);
             }
             if (key.name === 'backspace') {
                 //fire
+                this.fired.push(this.current());
+                this.people.splice(this.pointer, 1);
         }
     }); 
 }
-
 
     private current(){
         return this.people[this.pointer];
