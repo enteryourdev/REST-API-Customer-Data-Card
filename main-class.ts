@@ -15,18 +15,21 @@ private pointer = 0;
 private people: TrimmedUser[] = [];
 private hired: TrimmedUser[] = [];
 private fired: TrimmedUser[] = [];
+private isInMenu: boolean = false;
+private started: boolean = false;
 
     constructor(){
-
     }
 
     async load(){
-        this.people = await getDataBase<TrimmedUser>();
+        this.people = await getDataBase<TrimmedUser>(); 
     }
 
     async start(){
-
+        if (!this.started){ // switch
         const peopleData = await this.load();
+        this.started = true;
+        }
         console.log(this.current()); 
 
         //key press
@@ -52,7 +55,15 @@ private fired: TrimmedUser[] = [];
                 //fire
                 this.fired.push(this.current());
                 this.people.splice(this.pointer, 1);
-        }
+            }
+            if (key.name === 'q' && !this.isInMenu){ // open menu
+                this.menu();
+            }
+            if (key.name === 'q' && this.isInMenu){ // open menu
+                console.log("Menu was triggered even when menu was true.") // DEBUGGER
+                this.isInMenu = false;
+                return;
+            }
     }); 
 }
 
@@ -74,6 +85,24 @@ private fired: TrimmedUser[] = [];
         return this.people[this.pointer]
     }
 
+    private menu(){
+         process.stdin.on("keypress", (str, key) => {
+            let newPointer = 0;
+            console.log("Press F1 for hired list, and F2 for fired list");
+            if (key.name === 'f1'){
+                console.log(`you have hired total of: ${this.hired.length} people`);
+            }
+            if (key.name === 'f2'){
+                console.log(`you have hired total of: ${this.fired.length} people`);
+            }
+            if (key.name === 'q'){
+                this.isInMenu = false;
+                this.start();
+                
+            }
+         });
+    }
+// add updates, and load new profiles.
 
 }
 
