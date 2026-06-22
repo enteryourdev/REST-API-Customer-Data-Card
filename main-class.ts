@@ -38,34 +38,37 @@ private started: boolean = false;
         process.stdin.on("keypress", (str, key) => {
             if (gameover) return;
             if (key.ctrl && key.name === 'c') process.exit();
-
-            if (key.name === 'a') {
-                console.log(this.prev());
-            }
-            if (key.name === 'd') {
-                console.log(this.next());
-            }
-            if (key.name === 'return') {
-                //hire
-                //splice the current and push to hired.
-                this.hired.push(this.current());
-                this.people.splice(this.pointer, 1);
-            }
-            if (key.name === 'backspace') {
-                //fire
-                this.fired.push(this.current());
-                this.people.splice(this.pointer, 1);
-            }
-            if (key.name === 'q' && !this.isInMenu){ // open menu
-                this.menu();
-            }
-            if (key.name === 'q' && this.isInMenu){ // open menu
-                console.log("Menu was triggered even when menu was true.") // DEBUGGER
+            if (!this.isInMenu) this.mainGameKey(str, key);
+            else this.menu(str, key);
+           
+    }); 
+}
+    private mainGameKey(str: string, key: any){
+        if (key.name === 'a') {
+            console.log(this.prev());
+        }
+        if (key.name === 'd') {
+            console.log(this.next());
+        }
+        if (key.name === 'return') {
+            //hire
+            //splice the current and push to hired.
+            this.hired.push(this.current());
+            this.people.splice(this.pointer, 1);
+        }
+        if (key.name === 'backspace') {
+            //fire
+            this.fired.push(this.current());
+            this.people.splice(this.pointer, 1);
+        }
+        if (key.name === 'q'){ // open menu
+            if (this.isInMenu){
                 this.isInMenu = false;
                 return;
             }
-    }); 
-}
+            this.menu(str, key);
+        }
+    }
 
     private current(){
         return this.people[this.pointer];
@@ -85,7 +88,7 @@ private started: boolean = false;
         return this.people[this.pointer]
     }
 
-    private menu(){
+    private menu(str: string, key: any){
          process.stdin.on("keypress", (str, key) => {
             let newPointer = 0;
             console.log("Press F1 for hired list, and F2 for fired list");
