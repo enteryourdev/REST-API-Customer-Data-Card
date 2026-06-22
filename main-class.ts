@@ -8,6 +8,7 @@ import { getDataBase } from "./git-analysis"
 import { TrimmedUser } from "./git-analysis";
 import * as readline from "readline";
 let gameover: boolean = false;
+type Screen = 'game' | 'menu' | 'hiredList' | 'firedList' | 'settings';
 
 
 class mainClass{
@@ -17,6 +18,7 @@ private hired: TrimmedUser[] = [];
 private fired: TrimmedUser[] = [];
 private isInMenu: boolean = false;
 private started: boolean = false;
+private screen: Screen = 'game';
 
     constructor(){
     }
@@ -38,12 +40,31 @@ private started: boolean = false;
         process.stdin.on("keypress", (str, key) => {
             if (gameover) return;
             if (key.ctrl && key.name === 'c') process.exit();
-            if (!this.isInMenu) this.mainGameKey(str, key);
+            /* 
+            if (!this.isInMenu) this.mainGameState(str, key);
             else this.menu(str, key);
+            */
+           switch (this.screen){
+            case 'game':{
+                this.mainGameState(str, key);
+            }
+            case 'menu':{
+                this.menu(str, key);
+            }
+            case 'firedList':{
+                this.firedListState(str, key);
+            }
+            case 'hiredList':{
+                this.hiredListState(str, key);
+            }
+            case 'settings':{
+                this.settingState(str, key);
+            }
+           }
            
     }); 
 }
-    private mainGameKey(str: string, key: any){
+    private mainGameState(str: string, key: any){
         if (key.name === 'a') {
             console.log(this.prev());
         }
@@ -62,14 +83,36 @@ private started: boolean = false;
             this.people.splice(this.pointer, 1);
         }
         if (key.name === 'q'){ // open menu
-            if (this.isInMenu){
-                this.isInMenu = false;
-                return;
-            }
-            this.menu(str, key);
+            this.screen = 'menu';
+            console.log("now entering menu.");
         }
     }
 
+    private menu(str: string, key: any){
+            let newPointer = 0;
+            console.log("Press 1 for hired list, and 2 for fired list, q to exit menu");
+            if (key.name === '1'){
+                console.log(`you have hired total of: ${this.hired.length} people`);
+            }
+            if (key.name === '2'){
+                console.log(`you have hired total of: ${this.fired.length} people`);
+            }
+            if (key.name === 'q'){
+                this.isInMenu = false;         
+            }
+        };
+
+    private firedListState(str: string, key: any){
+
+    }
+    private hiredListState(str: string, key: any){
+
+    }
+    private settingState(str: string, key: any){
+
+    }
+
+    // mechanics.    
     private current(){
         return this.people[this.pointer];
     }
@@ -88,26 +131,13 @@ private started: boolean = false;
         return this.people[this.pointer]
     }
 
-    private menu(str: string, key: any){
-         process.stdin.on("keypress", (str, key) => {
-            let newPointer = 0;
-            console.log("Press F1 for hired list, and F2 for fired list");
-            if (key.name === 'f1'){
-                console.log(`you have hired total of: ${this.hired.length} people`);
-            }
-            if (key.name === 'f2'){
-                console.log(`you have hired total of: ${this.fired.length} people`);
-            }
-            if (key.name === 'q'){
-                this.isInMenu = false;
-                this.start();
-                
-            }
-         });
+    private async loadNew(){ // load new profiles.from git-analysis.ts
+
     }
-// add updates, and load new profiles.
 
 }
+// add updates, and load new profiles.
+
 
 /*
 I have a list of people.
