@@ -9,6 +9,7 @@ Objective: make a person card for each person in the database.
 
 import { getDataBase } from "./git-analysis"
 import { TrimmedUser } from "./git-analysis";
+import { updateData } from "./git-analysis"
 import * as readline from "readline";
 let gameover: boolean = false;
 type Screen = 'game' | 'menu' | 'hiredList' | 'firedList' | 'settings';
@@ -190,7 +191,8 @@ private screen: Screen = 'game';
     }
 
     private async loadNew(){ // load new profiles.from git-analysis.ts
-
+        const update: TrimmedUser[] = await updateData<TrimmedUser>();
+        this.people.push(...update);
     }
 
 }

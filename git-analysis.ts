@@ -70,7 +70,7 @@ export async function getDataBase<T>(): Promise<T[]>{
     return trimmedUserData as T[];
 }
 
-export async function updateData<T>(): Promise<T[]>{
+export async function updateData<T>(): Promise<T[]>{ // should take in updates but its for placeholder
     const user = await fetch("https://jsonplaceholder.typicode.com/users");
     const newUser: User[] = await user.json();
 
