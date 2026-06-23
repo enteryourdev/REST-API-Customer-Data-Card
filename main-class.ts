@@ -19,7 +19,7 @@ private pointer: Record<Screen, number> = {
             'menu': 0,
             'settings': 0
         };
-private people: TrimmedUser[] = [];
+private people: TrimmedUser[] = []; // people[0] people[1]d   
 private hired: TrimmedUser[] = [];
 private fired: TrimmedUser[] = [];
 private started: boolean = false;
@@ -149,6 +149,11 @@ private screen: Screen = 'game';
             case ('hiredList'): return this.hired[this.pointer[this.screen]];
             case ('firedList'): return this.fired[this.pointer[this.screen]];
         }
+    }
+
+
+    private currentMainMenu(){
+        
     }
 
     private next(){
