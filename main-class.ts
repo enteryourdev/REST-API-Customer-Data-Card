@@ -111,6 +111,9 @@ private screen: Screen = 'game';
             console.log("now entering menu.");
             console.log("Press 1 for hired list, and 2 for fired list, q to exit menu");
         }
+        if (key.name === 'f' && '5'){
+            this.loadNew();
+        }
     }
 
     private menu(str: string, key: any){
