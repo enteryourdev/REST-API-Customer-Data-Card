@@ -3,6 +3,9 @@ Objective: make a person card for each person in the database.
 1. make sure to show the person's ID, Name, Post, and Photo.
 2. You can press A for go back, or D to go forward for next person.
 */
+// 6-23: bug list: on a menu if i press A it goes back to main game, if i press D it goes forward but unidentified. fix this;  
+
+
 
 import { getDataBase } from "./git-analysis"
 import { TrimmedUser } from "./git-analysis";
@@ -41,6 +44,7 @@ private screen: Screen = 'game';
         }
         console.log(this.current()); 
 
+
         //key press
         readline.emitKeypressEvents(process.stdin);
         if (process.stdin.isTTY) process.stdin.setRawMode(true);
@@ -76,6 +80,9 @@ private screen: Screen = 'game';
            }
            
     }); 
+
+
+
 }
     private mainGameState(str: string, key: any){
         const person = this.current();
@@ -109,10 +116,12 @@ private screen: Screen = 'game';
             if (key.name === '1'){
                 console.log(`you have hired total of: ${this.hired.length} people.`);
                 this.screen = 'hiredList';
+                console.log(this.current());
             }
             if (key.name === '2'){
                 console.log(`you have fired total of: ${this.fired.length} people`);
                 this.screen = 'firedList';
+                console.log(this.current());
             }
             if (key.name === 'q'){
                 this.screen = 'game';
