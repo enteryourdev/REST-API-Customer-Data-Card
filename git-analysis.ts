@@ -70,4 +70,16 @@ export async function getDataBase<T>(): Promise<T[]>{
     return trimmedUserData as T[];
 }
 
+export async function updateData<T>(): Promise<T[]>{
+    const user = await fetch("https://jsonplaceholder.typicode.com/users");
+    const newUser: User[] = await user.json();
+
+    const loadUser = newUser.map((x) => {
+
+    id: x.id + 10;// just for this example.
+    username: x.username
+});
+    return loadUser as T[];
+}
+
 getDataBase();
