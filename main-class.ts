@@ -166,16 +166,25 @@ private screen: Screen = 'game';
         
     }
 
-    private next(){
+    private next(){ // fix on next() and prev() needed.
         this.pointer[this.screen]++;
-        if (this.pointer[this.screen] >= this.people.length) this.pointer[this.screen] = 0;
-        return this.current();
+        switch (this.screen){
+            case ('game'): if (this.pointer[this.screen] >= this.people.length) this.pointer[this.screen] = 0; break;
+            case ('hiredList'): if (this.pointer[this.screen] >= this.hired.length) this.pointer[this.screen] = 0; break;
+            case ('firedList'): if (this.pointer[this.screen] >= this.fired.length) this.pointer[this.screen] = 0; break;
+        }return this.current();
+        //if (this.pointer[this.screen] >= this.people.length) this.pointer[this.screen] = 0; // its this.people.length  for hired and fired list .
+        //return this.current();
     }
 
     private prev(){
         this.pointer[this.screen]--;
         if (this.pointer[this.screen] < 0) {
-            this.pointer[this.screen] = this.people.length - 1;
+            switch (this.screen){
+                case ('game'): this.pointer[this.screen] = this.people.length - 1; break;
+                case ('hiredList'): this.pointer[this.screen] = this.hired.length - 1; break;
+                case ('firedList'): this.pointer[this.screen] = this.fired.length - 1; break;
+            }
         }
         return this.people[this.pointer[this.screen]];
     }
