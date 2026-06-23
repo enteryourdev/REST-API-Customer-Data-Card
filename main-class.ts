@@ -57,6 +57,7 @@ private screen: Screen = 'game';
                 break;
             }
             case 'menu':{
+                this.pointer[this.screen] = 0; // menu should always start from scratch
                 this.menu(str, key);
                 break;
             }
@@ -100,12 +101,11 @@ private screen: Screen = 'game';
         if (key.name === 'q'){ // open menu
             this.screen = 'menu';
             console.log("now entering menu.");
+            console.log("Press 1 for hired list, and 2 for fired list, q to exit menu");
         }
     }
 
     private menu(str: string, key: any){
-            let newPointer = 0;
-            console.log("Press 1 for hired list, and 2 for fired list, q to exit menu");
             if (key.name === '1'){
                 console.log(`you have hired total of: ${this.hired.length} people.`);
                 this.screen = 'hiredList';
@@ -117,6 +117,7 @@ private screen: Screen = 'game';
             if (key.name === 'q'){
                 this.screen = 'game';
                 console.log("exiting menu");
+                console.log(this.current());
             }
         };
 
